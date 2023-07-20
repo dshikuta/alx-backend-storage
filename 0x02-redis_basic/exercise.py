@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-A Cache class that implements redis storage implicitly
+Defines a Cache class that implements redis storage implicitly
 """
 import uuid
 import redis
@@ -29,6 +29,7 @@ def call_history(method: Callable) -> Callable:
         self._redis.rpush(output_key, output)
         return output
     return wrapper
+
 
 def count_calls(method: Callable) -> Callable:
     """
@@ -122,4 +123,4 @@ def replay(fn: Callable) -> None:
     for i, o in zip(cache.lrange(ikey, 0, -1), cache.lrange(okey, 0, -1)):
         display += "{}(*{}) -> {}\n".format(
             fnName, i.decode('utf-8'), o.decode('utf-8'))
-    print(display, end=""
+    print(display, end="")
